@@ -137,10 +137,14 @@ public class SampleMecanumDrive extends MecanumDrive {
             setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
         }
 
-        // TODO: reverse any motors using DcMotor.setDirection()
+        // reverse right motors so that forward is positive power on all drive motors
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftRear.setDirection(DcMotor.Direction.FORWARD);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightRear.setDirection(DcMotor.Direction.REVERSE);
 
-        // TODO: if desired, use setLocalizer() to change the localization method
-        // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
+       //I think that MecanumLocalizer with imu is the default, but it doesn't hurt to do this anyway
+        setLocalizer(new MecanumLocalizer(this, true));
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
